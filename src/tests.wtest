@@ -1,0 +1,57 @@
+import Personas.*
+import Marcas.*
+
+describe "Requerimientos Primera Parte"{
+	// Se instancian las diferentes marcas de cervezas
+	const corona = new Rubia(graduacionA = 10, contenidoLupulo = 2, paisFabricacion = "Mexico")
+	const hofbrau = new Roja(contenidoLupulo = 2, paisFabricacion = "Alemania")
+	const guiness = new Negra(contenidoLupulo = 5,paisFabricacion ="Argentina")
+	// Se instancia la persona belga,aleman y checo 80kg musicatradicional = false , nivel de aguante 50
+	const personaBelga = new Belga()
+	const personaCheco = new Checo()
+	const personaAleman= new Aleman()
+
+	
+	// Se instancia una jarra
+	const jarraUno = new Jarra(capacidad = 0.5,marca = hofbrau)
+	const jarraDos = new Jarra(capacidad = 1,marca = corona)
+	test "Contenido de alcohol de una jarra de 0.5 de Cerveza hofbrau "{	
+		// reglamentaria = 5  conteniedoLupulo = 2 capacidadDeLaJarra = 0.5
+		//formula = 5.min(4) * 1.25 *
+		// 			(4*1.25)*0.01*0.5 == 0
+		//			5*0.01 * 0.5 = 0.025 litros
+		assert.equals(0.025,jarraUno.contenidoDeAlcohol())
+	}
+	test "Cantidad de Alcohol ingerido por personaBelga"{
+		personaBelga.comprarJarra(jarraUno)
+		personaBelga.comprarJarra(jarraDos)
+		// graduacion jarraDos = 0.1
+		// resultado esperado = 0.1.025 = 0.125 litros
+		assert.equals(0.125,personaBelga.alcoholEnSangre())
+		
+	}
+	test "No Esta ebria presonaBelga"{
+		// formula la suma del alcohol de las jarras compradas * el peso > nivel de aguante
+		// 0.125 * 80  = (10> 50) 
+		// esperado false
+		personaBelga.comprarJarra(jarraUno)
+		assert.notThat(personaBelga.estaEbria())
+	}
+	test "personaBelga le gusta la guiness"{
+		assert.that(personaBelga.leGusta(guiness))
+	}
+	test "personaBelga no le gusta la corona"{
+		assert.notThat(personaBelga.leGusta(corona))
+	}
+	test "personaCheco  le gusta la corona"{
+		assert.that(personaCheco.leGusta(corona))
+	}
+	test "personaCheco no le gusta la guiness"{
+		assert.notThat(personaCheco.leGusta(guiness))
+	}
+	test "personaAleman le gustan todas"{
+		assert.that(personaAleman.leGusta(guiness))
+		assert.that(personaAleman.leGusta(corona))
+		assert.that(personaAleman.leGusta(hofbrau))
+	}
+}
