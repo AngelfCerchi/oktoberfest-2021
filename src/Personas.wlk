@@ -43,8 +43,22 @@ class Persona {
 	}
 	method carpasDondeConsumi() = jarrasCompradas.map({j => j.seSirvioEnLaCarpa()}).asSet()
 	
-
-	
+	method estaEntrandoEnVicio(){
+		var respuesta
+		if(!jarrasCompradas.isEmpty() and jarrasCompradas.size() >1){
+			(1..jarrasCompradas.size()-1).forEach{ e=>
+				if(jarrasCompradas.get(e).capacidad() > jarrasCompradas.get(e-1).capacidad()){
+					respuesta = true
+				}else{
+					respuesta = false
+				}
+			}
+		}else{
+			respuesta = true
+		}
+		return respuesta
+	}
+		
 	//metodo abstracto
 	method leGusta(marcaCerveza)
 	method nacionalidad()

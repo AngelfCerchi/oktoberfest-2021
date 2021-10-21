@@ -101,4 +101,17 @@ describe "Requerimientos Primera Segunda"{
 		assert.that(personaCheco.esEmpedernido())
 	}
 }
+describe "Requerimientos avanzados"{
+	// adjunto algunos test
+	const corona = new Rubia(graduacionA = 10, contenidoLupulo = 2, paisFabricacion = "Belga")
+	const jarraUno = new Jarra(capacidad = 0.5,marca = corona)
+	const jarraDos = new Jarra(capacidad = 1,marca = corona)
+	const jarraTres = new Jarra(capacidad = 2,marca = corona)
+	const personaBelga = new Belga(jarrasCompradas = [jarraUno,jarraDos,jarraTres])
+	test "personaBelga entra en vicio"{
+		assert.that(personaBelga.estaEntrandoEnVicio())
+	}
+	
+}
+
 
