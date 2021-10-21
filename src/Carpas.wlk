@@ -18,7 +18,7 @@ class Carpa{
 		if(!self.personasInterior().contains(persona)){
 			self.error("Debes ingresar para luego consumir!")
 		}else{
-			persona.comprarJarra(new Jarra(capacidad = capacidadJarra,marca = self.marca()))
+			persona.comprarJarra(new Jarra(capacidad = capacidadJarra,marca = self.marca(), seSirvioEnLaCarpa = self))
 		}
 		
 	}
@@ -26,6 +26,8 @@ class Carpa{
 	method cantidadEbriosEmpedernidos() = self.personasInterior().count{ p => p.esEmpedernido()}
 	
 	// REQUERIMIENTOS AVANZADOS
-	method esCarpaHomogenea() =   if (personasInterior.size() > 0) personasInterior.all({ e => e.nacionalidad() == personasInterior.first().nacionalidad()}) else return 0
-
+	method esCarpaHomogenea() =   if (personasInterior.size() > 0) personasInterior.all({ e => e.nacionalidad() == personasInterior.first().nacionalidad()}) else  false
+	
+	
+	
 }

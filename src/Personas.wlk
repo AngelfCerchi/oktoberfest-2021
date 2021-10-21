@@ -32,6 +32,7 @@ class Persona {
 	
 	method esPatriota() = jarrasCompradas.all({j => j.marca().paisFabricacion() == self.nacionalidad()})
 	
+	
 	// REQUERIMIENTOS AVANZADOS - FUNCIONA
 	method hayCoincidencia(persona) {
 		const conjuntoSelfMarcas = jarrasCompradas.map({e => e.marca()}).asSet()		
@@ -40,8 +41,9 @@ class Persona {
 		// TIENE QUE HABER COINCIDENCIA DE AMBOS LADOS 
 		return conjuntoSelfMarcas.intersection(conjuntoPersonaMarcas).size() > conjuntoSelfMarcas.size()/2 and conjuntoPersonaMarcas.intersection(conjuntoSelfMarcas).size() > conjuntoPersonaMarcas.size()/2
 	}
+	method carpasDondeConsumi() = jarrasCompradas.map({j => j.seSirvioEnLaCarpa()}).asSet()
 	
-	
+
 	
 	//metodo abstracto
 	method leGusta(marcaCerveza)
