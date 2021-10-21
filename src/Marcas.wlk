@@ -4,7 +4,7 @@ object graduacionReglamentaria{
 
 class MarcasCervezas {
 	var property contenidoLupulo
-	var property paisFabricacion
+	var property paisFabricacion // Aleman, Checo,Belga
 	
 	// metodo abstracto
 	method graduacionA()
@@ -26,5 +26,6 @@ class Roja inherits Negra{
 class Jarra{
 	var property capacidad = 1
 	var property marca
+	
 	method contenidoDeAlcohol() = capacidad * (marca.graduacionA()*0.01)
 }

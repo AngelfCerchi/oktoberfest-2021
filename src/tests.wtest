@@ -1,11 +1,11 @@
 import Personas.*
 import Marcas.*
-
+import Carpas.*
 describe "Requerimientos Primera Parte"{
 	// Se instancian las diferentes marcas de cervezas
-	const corona = new Rubia(graduacionA = 10, contenidoLupulo = 2, paisFabricacion = "Mexico")
-	const hofbrau = new Roja(contenidoLupulo = 2, paisFabricacion = "Alemania")
-	const guiness = new Negra(contenidoLupulo = 5,paisFabricacion ="Argentina")
+	const corona = new Rubia(graduacionA = 10, contenidoLupulo = 2, paisFabricacion = "Belga")
+	const hofbrau = new Roja(contenidoLupulo = 2, paisFabricacion = "Checa")
+	const guiness = new Negra(contenidoLupulo = 5,paisFabricacion ="Alemana")
 	// Se instancia la persona belga,aleman y checo 80kg musicatradicional = false , nivel de aguante 50
 	const personaBelga = new Belga()
 	const personaCheco = new Checo()
@@ -55,3 +55,50 @@ describe "Requerimientos Primera Parte"{
 		assert.that(personaAleman.leGusta(hofbrau))
 	}
 }
+describe "Requerimientos Primera Segunda"{
+	// Se instancian las diferentes marcas de cervezas
+	const corona = new Rubia(graduacionA = 10, contenidoLupulo = 2, paisFabricacion = "Belga")
+	const hofbrau = new Roja(contenidoLupulo = 5, paisFabricacion = "Checa")
+	const guiness = new Negra(contenidoLupulo = 4,paisFabricacion ="Alemana" )
+	// Se instancia la persona belga,aleman y checo 80kg  , nivel de aguante 10
+	const personaBelga = new Belga(nivelDeAguante = 10)
+	const personaCheco = new Checo(musicaTradicional = true,nivelDeAguante = 10) // le gusta la musica
+	const personaAleman= new Aleman(nivelDeAguante = 10)
+	// JARRAS
+	const jarraHofbrau = new Jarra(capacidad = 1,marca = hofbrau)
+	const jarraCorona = new Jarra(capacidad = 1,marca = corona)
+	const jarraGuiness = new Jarra(capacidad = 1, marca= guiness)
+	
+	// CARPA
+	const carpaCorona = new Carpa(limite = 2 ,marca = corona ,hayMusica = true,personasInterior=[personaAleman,personaBelga])// tiene musica
+	const carpaHofbrau = new Carpa(marca = hofbrau)
+	const carpaGuiness = new Carpa(marca = guiness) 
+	
+	test "Le gusta a personaBelga la carpaHofbrau"{
+		assert.that(personaBelga.leGustaLaCarpa(carpaHofbrau))
+	}
+	test "No le gusta a personaBelga la carpaGuiness"{
+		assert.notThat(personaBelga.leGustaLaCarpa(carpaGuiness))
+	}
+	test "le gusta a personaCheco la carpaCorona con musica"{
+		assert.that(personaCheco.leGustaLaCarpa(carpaCorona))
+	}
+	test "carpaCorona supera limite de personas limite (2)"{
+		assert.notThat(carpaCorona.puedeIngresar(personaCheco))
+	}
+	test "Puede ingresar personaBelga a carpaHofbrau"{
+		assert.that(carpaHofbrau.puedeIngresar(personaBelga))
+	}
+	test "No puede ingresar personaAleman a carpaHofbrau por estar Ebrio"{
+		50.times({j => personaAleman.comprarJarra(jarraGuiness)}) 
+		assert.notThat(carpaHofbrau.puedeIngresar(personaAleman))
+	}
+	test "personaAleman es patriota"{
+		assert.that(personaAleman.esPatriota())
+	}
+	test "personaCheco es empedernido"{
+		50.times({j => personaCheco.comprarJarra(jarraGuiness)})
+		assert.that(personaCheco.esEmpedernido())
+	}
+}
+
