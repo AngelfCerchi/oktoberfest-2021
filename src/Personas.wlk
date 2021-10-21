@@ -2,7 +2,7 @@ import Marcas.*
 import Carpas.*
 
 class Persona {
-	const jarrasCompradas = [] //jarras
+	var property jarrasCompradas = [] //jarras
 	var property peso = 80
 	var property musicaTradicional = false
 	var property nivelDeAguante = 50	
@@ -32,6 +32,12 @@ class Persona {
 	
 	method esPatriota() = jarrasCompradas.all({j => j.marca().paisFabricacion() == self.nacionalidad()})
 	
+	// REQUERIMIENTOS AVANZADOS - FUNCIONA
+	method hayCoincidencia(persona) {
+		const conjuntoSelfMarcas = jarrasCompradas.map({e => e.marca()}).asSet()		
+		const conjuntoPersonaMarcas = persona.jarrasCompradas().map({e => e.marca()}).asSet()
+		return conjuntoSelfMarcas.intersection(conjuntoPersonaMarcas).size() > conjuntoSelfMarcas.size()/2
+	}
 	
 	
 	//metodo abstracto
