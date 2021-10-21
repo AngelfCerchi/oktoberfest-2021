@@ -25,4 +25,7 @@ class Carpa{
 	
 	method cantidadEbriosEmpedernidos() = self.personasInterior().count{ p => p.esEmpedernido()}
 	
+	// REQUERIMIENTOS AVANZADOS
+	method esCarpaHomogenea() =   if (personasInterior.size() > 0) personasInterior.all({ e => e.nacionalidad() == personasInterior.first().nacionalidad()}) else return 0
+
 }

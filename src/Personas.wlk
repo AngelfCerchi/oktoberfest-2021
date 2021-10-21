@@ -36,8 +36,11 @@ class Persona {
 	method hayCoincidencia(persona) {
 		const conjuntoSelfMarcas = jarrasCompradas.map({e => e.marca()}).asSet()		
 		const conjuntoPersonaMarcas = persona.jarrasCompradas().map({e => e.marca()}).asSet()
-		return conjuntoSelfMarcas.intersection(conjuntoPersonaMarcas).size() > conjuntoSelfMarcas.size()/2
+		
+		// TIENE QUE HABER COINCIDENCIA DE AMBOS LADOS 
+		return conjuntoSelfMarcas.intersection(conjuntoPersonaMarcas).size() > conjuntoSelfMarcas.size()/2 and conjuntoPersonaMarcas.intersection(conjuntoSelfMarcas).size() > conjuntoPersonaMarcas.size()/2
 	}
+	
 	
 	
 	//metodo abstracto
