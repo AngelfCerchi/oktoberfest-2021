@@ -58,6 +58,9 @@ class Persona {
 		}
 		return respuesta
 	}
+	//
+	method comproCervezasEn(carpa) = jarrasCompradas.any{ j => j.seSirvioEnLaCarpa() == carpa}
+	
 	//Bonus - precio de venta
 	method gastoTotal() = jarrasCompradas.sum{ j => j.precioQueSeVendio()}
 	method jarraMasCara() = jarrasCompradas.max{ j=> j.precioQueSeVendio()}
@@ -65,6 +68,7 @@ class Persona {
 	//metodo abstracto
 	method leGusta(marcaCerveza)
 	method nacionalidad()
+	
 
 }
 class Belga inherits Persona{

@@ -28,6 +28,7 @@ class Carpa{
 	// REQUERIMIENTOS AVANZADOS
 	method esCarpaHomogenea() =   if (personasInterior.size() > 0) personasInterior.all({ e => e.nacionalidad() == personasInterior.first().nacionalidad()}) else  false
 	
+	method noSeSirvioCerveza() = personasInterior.map{ p => !p.comproCervezasEn(self)}
 	//Bonus - precio de venta
 	method aplicaRecargoPorEbriedad() = personasInterior.count{ p => p.estaEbria()} > personasInterior.size()*0.75
 	method precioPorLitro(){
