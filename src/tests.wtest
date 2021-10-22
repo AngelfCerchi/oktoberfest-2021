@@ -69,6 +69,7 @@ describe "Requerimientos Primera Segunda"{
 	const jarraCorona = new Jarra(capacidad = 1,marca = corona)
 	const jarraGuiness = new Jarra(capacidad = 1, marca= guiness)
 	
+
 	// CARPA
 	const carpaCorona = new Carpa(limite = 2 ,marca = corona ,hayMusica = true,personasInterior=[personaAleman,personaBelga])// tiene musica
 	const carpaHofbrau = new Carpa(marca = hofbrau)

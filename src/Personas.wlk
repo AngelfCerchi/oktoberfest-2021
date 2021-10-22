@@ -43,21 +43,27 @@ class Persona {
 	}
 	method carpasDondeConsumi() = jarrasCompradas.map({j => j.seSirvioEnLaCarpa()}).asSet()
 	
-	method estaEntrandoEnVicio(){
-		var respuesta
-		if(!jarrasCompradas.isEmpty() and jarrasCompradas.size() >1){
-			(1..jarrasCompradas.size()-1).forEach{ e=>
-				if(jarrasCompradas.get(e).capacidad() > jarrasCompradas.get(e-1).capacidad()){
-					respuesta = true
-				}else{
-					respuesta = false
-				}
-			}
-		}else{
-			respuesta = true
-		}
-		return respuesta
+
+	method mayorQueAnterior(n){
+		return jarrasCompradas.get(n).capacidad() >= jarrasCompradas.get(n-1).capacidad()
 	}
+	method estaEntrandoEnVicio(){
+		const listaAux = []
+		if(jarrasCompradas.size() == 0){
+			return false
+		}else{
+			if (jarrasCompradas.size() > 1){
+			(1..jarrasCompradas.size()-1).forEach{ j => listaAux.add(self.mayorQueAnterior(j))}
+			return listaAux.all{ e => true}
+		}else{
+			return false
+			
+		}
+		
+		}
+	
+	}
+
 	//
 	method comproCervezasEn(carpa) = jarrasCompradas.any{ j => j.seSirvioEnLaCarpa() == carpa}
 	
