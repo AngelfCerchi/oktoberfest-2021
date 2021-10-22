@@ -18,7 +18,7 @@ class Carpa{
 		if(!self.personasInterior().contains(persona)){
 			self.error("Debes ingresar para luego consumir!")
 		}else{
-			persona.comprarJarra(new Jarra(capacidad = capacidadJarra,marca = self.marca(), seSirvioEnLaCarpa = self))
+			persona.comprarJarra(new Jarra(capacidad = capacidadJarra,marca = self.marca(), seSirvioEnLaCarpa = self ,precioQueSeVendio= capacidadJarra*self.precioPorLitro()))
 		}
 		
 	}
@@ -28,6 +28,21 @@ class Carpa{
 	// REQUERIMIENTOS AVANZADOS
 	method esCarpaHomogenea() =   if (personasInterior.size() > 0) personasInterior.all({ e => e.nacionalidad() == personasInterior.first().nacionalidad()}) else  false
 	
-	
+	//Bonus - precio de venta
+	method aplicaRecargoPorEbriedad() = personasInterior.count{ p => p.estaEbria()} > personasInterior.size()*0.75
+	method precioPorLitro(){
+		var precio = self.marca().precioPorLitro() *1.3
+		if(personasInterior.size() >= personasInterior.size()/2){
+			precio*=1.40
+		}else{
+			precio*=1.20
+		}
+		if(self.aplicaRecargoPorEbriedad()){
+			precio*=1.5
+		}else{
+			precio*=1.2
+		}
+	return precio
+	}
 	
 }

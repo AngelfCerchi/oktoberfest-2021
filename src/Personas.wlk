@@ -33,7 +33,7 @@ class Persona {
 	method esPatriota() = jarrasCompradas.all({j => j.marca().paisFabricacion() == self.nacionalidad()})
 	
 	
-	// REQUERIMIENTOS AVANZADOS - FUNCIONA
+	// REQUERIMIENTOS AVANZADOS
 	method hayCoincidencia(persona) {
 		const conjuntoSelfMarcas = jarrasCompradas.map({e => e.marca()}).asSet()		
 		const conjuntoPersonaMarcas = persona.jarrasCompradas().map({e => e.marca()}).asSet()
@@ -58,7 +58,10 @@ class Persona {
 		}
 		return respuesta
 	}
-		
+	//Bonus - precio de venta
+	method gastoTotal() = jarrasCompradas.sum{ j => j.precioQueSeVendio()}
+	method jarraMasCara() = jarrasCompradas.max{ j=> j.precioQueSeVendio()}
+	
 	//metodo abstracto
 	method leGusta(marcaCerveza)
 	method nacionalidad()
