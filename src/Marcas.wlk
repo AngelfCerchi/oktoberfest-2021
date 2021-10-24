@@ -1,7 +1,3 @@
-object graduacionReglamentaria{
-	var property graduacionA = 5 //porcentaje
-}
-
 class MarcasCervezas {
 	var property contenidoLupulo
 	var property paisFabricacion // Aleman, Checo,Belga
@@ -19,7 +15,10 @@ class Rubia inherits MarcasCervezas{
 }
 
 class Negra inherits MarcasCervezas{
-	override method graduacionA() = graduacionReglamentaria.graduacionA().min(contenidoLupulo*2)
+	
+	var property graduacionReglamentaria = 5
+	override method graduacionA() = graduacionReglamentaria.min(contenidoLupulo*2)
+	
 }
 
 class Roja inherits Negra{
@@ -30,9 +29,10 @@ class Roja inherits Negra{
 class Jarra{
 	var property capacidad = 1
 	var property marca
-	var property seSirvioEnLaCarpa
+	var property seSirvioEnLaCarpa 
+	
 	//Bonus - precio de venta
-	var property precioQueSeVendio 
+	var property precioQueSeVendio = 0
 	
 	method contenidoDeAlcohol() = capacidad * (marca.graduacionA()*0.01)
 }

@@ -109,8 +109,21 @@ describe "Requerimientos avanzados"{
 	const jarraDos = new Jarra(capacidad = 1,marca = corona)
 	const jarraTres = new Jarra(capacidad = 2,marca = corona)
 	const personaBelga = new Belga(jarrasCompradas = [jarraUno,jarraDos,jarraTres])
+	const personaAleman = new Aleman(jarrasCompradas =[jarraUno,jarraDos])
+	const carpaCorona = new Carpa(marca= corona , personasInterior = [personaBelga,personaAleman])
 	test "personaBelga entra en vicio"{
 		assert.that(personaBelga.estaEntrandoEnVicio())
+	}
+	test " compatibles y diferentes"{
+		assert.that(personaAleman.sonCompatibles(personaBelga))
+	}
+	test "precio por litro carpa fijo"{
+		assert.equals(130,carpaCorona.precioPorLitro())
+	}
+	test" gasto total personaAleman"{
+		carpaCorona.servirCerveza(personaAleman,1)
+		carpaCorona.servirCerveza(personaAleman,1)
+		assert.equals(260,personaAleman.gastoTotal())
 	}
 	
 }

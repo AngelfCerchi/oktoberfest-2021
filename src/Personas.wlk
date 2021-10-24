@@ -25,7 +25,6 @@ class Persona {
 		}else{
 			carpa.ingresarA(self)
 		}
-		
 	}
 	
 	method esEmpedernido() = jarrasCompradas.all({j => j.capacidad() >= 1}) and self.estaEbria()
@@ -34,13 +33,13 @@ class Persona {
 	
 	
 	// REQUERIMIENTOS AVANZADOS
-	method hayCoincidencia(persona) {
-		const conjuntoSelfMarcas = jarrasCompradas.map({e => e.marca()}).asSet()		
-		const conjuntoPersonaMarcas = persona.jarrasCompradas().map({e => e.marca()}).asSet()
-		
-		// TIENE QUE HABER COINCIDENCIA DE AMBOS LADOS 
-		return conjuntoSelfMarcas.intersection(conjuntoPersonaMarcas).size() > conjuntoSelfMarcas.size()/2 and conjuntoPersonaMarcas.intersection(conjuntoSelfMarcas).size() > conjuntoPersonaMarcas.size()/2
-	}
+	method marcasCompradas()= jarrasCompradas.map({j => j.marca()}).asSet()
+	method marcasCompatibles(otraPersona)= self.marcasCompradas().intersection(otraPersona.marcasCompradas()).size()
+	method marcasDiferentes(otraPersona)= self.marcasCompradas().difference(otraPersona.marcasCompradas()).size()
+	
+	method sonCompatibles(otraPersona)=  self.marcasCompatibles(otraPersona) > self.marcasDiferentes(otraPersona)
+	
+	
 	method carpasDondeConsumi() = jarrasCompradas.map({j => j.seSirvioEnLaCarpa()}).asSet()
 	
 
@@ -53,35 +52,33 @@ class Persona {
 			return false
 		}else{
 			if (jarrasCompradas.size() > 1){
-			(1..jarrasCompradas.size()-1).forEach{ j => listaAux.add(self.mayorQueAnterior(j))}
-			return listaAux.all{ e => true}
+			(1..jarrasCompradas.size()-1).forEach{ pos => listaAux.add(self.mayorQueAnterior(pos))}
+			return listaAux.size() == jarrasCompradas.size()-1
 		}else{
-			return false
-			
+			return false			
 		}
-		
 		}
-	
 	}
 
 	//
-	method comproCervezasEn(carpa) = jarrasCompradas.any{ j => j.seSirvioEnLaCarpa() == carpa}
+	method comproCervezasEn(carpa) = jarrasCompradas.any{ j => j.seSirvioEnLaCarpa() == carpa }
 	
 	//Bonus - precio de venta
-	method gastoTotal() = jarrasCompradas.sum{ j => j.precioQueSeVendio()}
-	method jarraMasCara() = jarrasCompradas.max{ j=> j.precioQueSeVendio()}
+	method gastoTotal() = jarrasCompradas.sum{ j => j.precioQueSeVendio() }
+	method jarraMasCara() = jarrasCompradas.max{ j=> j.precioQueSeVendio() }
 	
-	//metodo abstracto
+	//metodo abstracto	
 	method leGusta(marcaCerveza)
 	method nacionalidad()
 	
-
 }
+
 class Belga inherits Persona{
 	override method leGusta(marcaCerveza) = marcaCerveza.contenidoLupulo() > 4
 	
 	override method nacionalidad() = "Belga"
 }
+
 class Checo inherits Persona{
 	override method leGusta(marcaCerveza) = marcaCerveza.graduacionA() > 8
 	

@@ -6,6 +6,7 @@ class Carpa{
 	var property hayMusica = false
 	var property marca 
 	var property personasInterior = []
+	var property recargo = fijo
 	
 	
 	method puedeIngresar(persona) = self.personasInterior().size() < self.limite() and !persona.estaEbria()
@@ -18,7 +19,7 @@ class Carpa{
 		if(!self.personasInterior().contains(persona)){
 			self.error("Debes ingresar para luego consumir!")
 		}else{
-			persona.comprarJarra(new Jarra(capacidad = capacidadJarra,marca = self.marca(), seSirvioEnLaCarpa = self ,precioQueSeVendio= capacidadJarra*self.precioPorLitro()))
+			persona.comprarJarra(new Jarra(capacidad = capacidadJarra,marca = self.marca(), seSirvioEnLaCarpa = self , precioQueSeVendio = capacidadJarra*self.precioPorLitro()))
 		}
 		
 	}
@@ -26,24 +27,22 @@ class Carpa{
 	method cantidadEbriosEmpedernidos() = self.personasInterior().count{ p => p.esEmpedernido()}
 	
 	// REQUERIMIENTOS AVANZADOS
-	method esCarpaHomogenea() =   if (personasInterior.size() > 0) personasInterior.all({ e => e.nacionalidad() == personasInterior.first().nacionalidad()}) else  false
+	method esCarpaHomogenea() =   personasInterior.all({ p => p.nacionalidad() == personasInterior.first().nacionalidad()}) 
 	
 	method noSeSirvioCerveza() = personasInterior.map{ p => !p.comproCervezasEn(self)}
 	//Bonus - precio de venta
-	method aplicaRecargoPorEbriedad() = personasInterior.count{ p => p.estaEbria()} > personasInterior.size()*0.75
-	method precioPorLitro(){
-		var precio = self.marca().precioPorLitro() *1.3
-		if(personasInterior.size() >= personasInterior.size()/2){
-			precio*=1.40
-		}else{
-			precio*=1.20
-		}
-		if(self.aplicaRecargoPorEbriedad()){
-			precio*=1.5
-		}else{
-			precio*=1.2
-		}
-	return precio
-	}
 	
+	method precioPorLitro() = recargo.precio(marca.precioPorLitro())
+	
+}
+
+// TIPOS DE RECARGOS
+object fijo{
+	method precio(precio) = precio*1.30
+}
+object cantidad{
+	method precio(carpa,precio) = if (carpa.personasInterior().size()  >= carpa.personasInterior().size()/2) precio*1.4 else precio*1.25
+}
+object ebriedad{
+	method precio(carpa,precio) = if (carpa.personasInterior().count{ p => p.estaEbria()} > carpa.personasInterior().size()*0.75) precio*1.5 else precio*1.2
 }
